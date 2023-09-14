@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\NotificationEvent;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,11 @@ Route::get('/', function () {
 
 Route::get('/hello-this' , function () {
     return view('welcome');
+});
+
+Route::get('test', function () {
+    event(new NotificationEvent('Monika'));
+    return "Event has been sent!";
 });
 
 Auth::routes();
