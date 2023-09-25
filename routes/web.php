@@ -3,6 +3,7 @@
 use App\Events\NotificationEvent;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Goutte\Client;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +20,31 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/hello-this' , function () {
+Route::get('/get-content', function () {
+
+    $client = new Client();
+    $crawler = $client->request('GET', 'https://www.daraz.pk/mens-shoes/?spm=a2a0e.home.cate_3.8.35e34076Gbpjru');
+    echo '<pre>';
+
+    // dd($crawler->filter('.currency--GVKjl')->text());
+
+
+    $crawler->filter('a')->each(function ($node){
+        $nt = $node->text();
+        print_r($nt)  ;
+        echo '<br>';
+    });
+
+    echo 'done';
+    // dd($crawler->html());
+    // Extract data from the page
+    // $data = $crawler->filter('h4')->text();
+    // echo $crawler->filter('h4')->last()->text();
+    // Process and store the scraped data as needed
+
+});
+
+Route::get('/hello-this', function () {
     return view('welcome');
 });
 
